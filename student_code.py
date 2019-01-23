@@ -23,7 +23,12 @@ class KnowledgeBase(object):
         Args:
             fact (Fact or Rule): Fact or Rule we're asserting in the format produced by read.py
         """
-        print("Asserting {!r}".format(fact))
+        # print("Asserting {!r}".format(fact))
+
+        # 1) check if the arg is already a fact in the kb --> we don't store facts that are already in the kb 
+        # 2) facts should be stored in a list --> use append
+        if fact not in self.facts:
+            self.facts.append(fact)
         
     def kb_ask(self, fact):
         """Ask if a fact is in the KB
@@ -34,4 +39,21 @@ class KnowledgeBase(object):
         Returns:
             ListOfBindings|False - ListOfBindings if result found, False otherwise
         """
-        print("Asking {!r}".format(fact))
+        # print("Asking {!r}".format(fact))
+
+        # find any fact that matches the queried fact
+        # use match from util.py to find matches if fact input is a variable
+        # if facts match, matches returns a bindings list
+        # ask needs to return either a list of bindings or false
+        # ask will return false if no match was made 
+        bindings_list = ListOfBindings()
+        match_made = False
+        for f in self.facts:
+            bindings = match(fact.statement, f.statement)
+            if bindings != False:
+                bindings_list.add_bindings(bindings)
+                match_made = True
+        if match_made == False: 
+            return False
+        return bindings_list
+        

@@ -12,20 +12,20 @@ class KBTest(unittest.TestCase):
         self.KB = KnowledgeBase([], [])
         for item in data:
             if isinstance(item, Fact):
-                self.KB.kb_assert(item)
-        
+                self.KB.kb_assert(item)        
 
     def test1(self):
         ask1 = read.parse_input("fact: (color bigbox red)")
         print(' Asking if', ask1)
         answer = self.KB.kb_ask(ask1)
         self.assertEqual(answer[0].bindings, [])
-        #self.assertEqual(answer.list_of_bindings[0][1][0], ask1)
+        # self.assertEqual(answer.list_of_bindings[0][1][0], ask1)
 
     def test2(self):
         ask1 = read.parse_input("fact: (color littlebox red)")
         print(' Asking if', ask1)
         answer = self.KB.kb_ask(ask1)
+        print("The answer is ", answer)
         self.assertFalse(answer)
 
     def test3(self):
